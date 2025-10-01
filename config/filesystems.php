@@ -56,8 +56,8 @@ return [
             'url' => env('LARAVEL_CLOUD_URL'),
             'endpoint' => env('LARAVEL_CLOUD_ENDPOINT'),
             'use_path_style_endpoint' => env('LARAVEL_CLOUD_USE_PATH_STYLE_ENDPOINT', false),
-            'throw' => false,
-            'report' => false,
+            'throw' => true,
+            'report' => true,
         ],
 
     ],
