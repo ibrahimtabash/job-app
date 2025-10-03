@@ -13,9 +13,9 @@
             </h3>
 
             <!-- Search & Filters -->
-            <div class="flex items-center justify-between mt-6">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center justify-between mt-6">
                 <!-- Search Bar -->
-                <form action="{{ route('dashboard') }}" method="GET" class="flex items-center justify-center w-1/3">
+                <form action="{{ route('dashboard') }}" method="GET" class="flex items-center justify-center md:w-1/3">
                     <input type="text" name="search" value="{{ request('search') }}"
                         class="w-full p-2 rounded-l-lg bg-gray-800 text-white" placeholder="Search for a job">
 
@@ -32,7 +32,7 @@
                     @endif
                 </form>
                 <!-- Filters -->
-                <div class="flex space-x-2">
+                <div class="hidden md:flex space-x-2">
                     <a href="{{ route('dashboard', ['filter' => 'Full-Time', 'search' => request('search')]) }}"
                         class="bg-indigo-500 text-white p-2 rounded-lg">Full-Time</a>
                     <a href="{{ route('dashboard', ['filter' => 'Remote', 'search' => request('search')]) }}"
@@ -48,7 +48,40 @@
                     @endif
 
                 </div>
+                <!-- Mobile Filters -->
+                <div class="flex md:hidden space-x-2">
+                    <select name="filter" id="job-filter" class="w-1/2 bg-gray-800 text-white px-3 py-2 rounded-lg">
+                        <option value="">Select Job Type</option>
+                        <option
+                            value="{{ route('dashboard', ['filter' => 'Full-Time', 'search' => request('search')]) }}"
+                            {{ request('filter') == 'Full-Time' ? 'selected' : '' }}>
+                            Full-Time
+                        </option>
+                        <option value="{{ route('dashboard', ['filter' => 'Remote', 'search' => request('search')]) }}"
+                            {{ request('filter') == 'Remote' ? 'selected' : '' }}>
+                            Remote
+                        </option>
+                        <option value="{{ route('dashboard', ['filter' => 'Hybrid', 'search' => request('search')]) }}"
+                            {{ request('filter') == 'Hybrid' ? 'selected' : '' }}>
+                            Hybrid
+                        </option>
+                        <option
+                            value="{{ route('dashboard', ['filter' => 'Contract', 'search' => request('search')]) }}"
+                            {{ request('filter') == 'Contract' ? 'selected' : '' }}>
+                            Contract
+                        </option>
+                    </select>
+
+
+                    @if (request('filter'))
+                        <a href="{{ route('dashboard', ['search' => request('search')]) }}"
+                            class="text-white p-2 rounded-lg">Clear</a>
+                    @endif
+
+                </div>
+
             </div>
+
 
             <!-- Job List -->
             <div class="space-y-4 mt-6">

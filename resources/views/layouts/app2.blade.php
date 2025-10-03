@@ -36,6 +36,14 @@
             {{ $slot }}
         </main>
     </div>
+
+    <script>
+        document.getElementById('job-filter').addEventListener('change', function() {
+            if (this.value) {
+                window.location.href = this.value;
+            }
+        });
+    </script>
 </body>
 
 </html>
