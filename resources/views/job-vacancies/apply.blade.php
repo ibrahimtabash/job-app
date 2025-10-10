@@ -54,8 +54,7 @@
                                     <input type="radio" name="resume_option" id="{{ $resume->id }}"
                                         value="{{ $resume->id }}"
                                         @error('resume_option') class="border-red-500" @else class="border-gray-600" @enderror />
-                                    <x-input-label for="existing_{{ $resume->id }}"
-                                        class="text-white cursor-pointer">
+                                    <x-input-label for="{{ $resume->id }}" class="text-white cursor-pointer">
                                         {{ $resume->filename }}
                                         <span class="text-gray-400 text-sm">(Last updated:
                                             {{ $resume->updated_at->format('M d, Y') }})</span>
@@ -84,8 +83,12 @@
                     <div class="flex items-center">
                         <div class="flex-1">
                             <label for="new_resume_file" class="block text-white cursor-pointer">
-                                <div class="border-2 border-dashed border-gray-600 rounded-lg p-4 hover:border-blue-500 transition"
-                                    :class="{ 'border-blue-500': fileName, 'border-red-500': hasError }">
+                                <div class="border-2 border-dashed rounded-lg p-4 hover:border-blue-500 transition"
+                                    :class="{
+                                        'border-blue-500': fileName && !hasError,
+                                        'border-red-500': hasError,
+                                        'border-gray-600': !fileName && !hasError
+                                    }">
                                     <input
                                         @change="fileName = $event.target.files[0].name; $refs.newResumeRadio.checked = true"
                                         type="file" name="resume_file" id="new_resume_file" class="hidden"

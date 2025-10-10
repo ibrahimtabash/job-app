@@ -15,7 +15,6 @@
         'hover:from-indigo-600',
         'hover:to-rose-600',
         'transition',
-        // هذه تتيح لك تمرير w-full أو غيرها من الكلاسات من الخارج
     ]) }}>
     {{ $slot }}
 </button>

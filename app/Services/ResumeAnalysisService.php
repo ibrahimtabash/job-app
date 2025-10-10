@@ -73,7 +73,6 @@ class ResumeAnalysisService
         }
     }
 
-    // lec15
     public function analyzeResume($jobVacancy, $resumeData): array
     {
         try {
