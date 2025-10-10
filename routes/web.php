@@ -16,7 +16,7 @@ Route::get('/', function () {
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
-Route::middleware(['auth', 'verified', 'role:job-seeker'])->group(function () {
+Route::middleware(['auth', 'role:job-seeker'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('job-applications.index');
     Route::get('/job-vacancies/{id}', [JobVacancyController::class, 'show'])->name('job-vacancies.show');
