@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobVacancyController;
@@ -31,6 +32,15 @@ Route::middleware(['auth', 'role:job-seeker'])->group(function () {
     // testOpenAI
     // Route::get('/test-openai', [JobVacancyController::class, 'testOpenAI'])->name('test-openai');
     Route::get('/test-openai', [JobVacancyController::class, 'testOpenAi'])->name('test-openai');
+});
+// routes/web.php
+Route::get('/_session-test', function (\Illuminate\Http\Request $r) {
+    $r->session()->put('x', 'ok');
+    return [
+        'has_session' => $r->session()->has('x'),
+        'session_id'  => $r->session()->getId(),
+        'csrf'        => csrf_token(),
+    ];
 });
 
 require __DIR__ . '/auth.php';
