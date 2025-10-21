@@ -212,7 +212,7 @@
 
                 <!-- Team Member 2 -->
                 <div class="bg-gray-900/50 p-6 rounded-2xl shadow-lg flex flex-col items-center">
-                    <img src="{{ asset('images/ibrahim.jpg') }}" alt="Team member Yousef Alnather"
+                    <img src="{{ asset('images/yousef.jpg') }}" alt="Team member Yousef Alnather"
                         class="w-28 h-28 rounded-full object-cover mb-4">
                     <h6 class="text-white font-semibold text-lg">Yousef Alnather</h6>
                     <p class="text-gray-400">Full-Stack Developer</p>
@@ -220,7 +220,7 @@
 
                 <!-- Team Member 3 -->
                 <div class="bg-gray-900/50 p-6 rounded-2xl shadow-lg flex flex-col items-center">
-                    <img src="{{ asset('images/ibrahim.jpg') }}" alt="Team member Adam Saleh"
+                    <img src="{{ asset('images/adam.jpg') }}" alt="Team member Adam Saleh"
                         class="w-28 h-28 rounded-full object-cover mb-4">
                     <h6 class="text-white font-semibold text-lg">Adam Saleh</h6>
                     <p class="text-gray-400">Frontend Developer</p>
