@@ -30,93 +30,112 @@
             </div>
 
             <form action="{{ route('job-vacancies.process-application', $jobVacancy->id) }}" method="POST"
-                enctype="multipart/form-data" class="space-y-6">
+                enctype="multipart/form-data" class="space-y-6" x-data="{ loading: false }"
+                @submit.prevent="if (!loading) { loading = true; $el.submit() }">
                 @csrf
 
-                @if ($errors->any())
-                    <div class="bg-red-500 text-white p-4 rounded-lg">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                <!-- Resume Selection -->
-                <div>
-                    <h3 class="text-xl font-semibold text-white mb-4">Choose Your Resume</h3>
-                    <div class="mb-6">
-                        <x-input-label for="resume" value="Select from your existing resumes:" />
-                        <!-- List of Resumes -->
-                        <div class="space-y-4">
-                            @forelse ($resumes as $resume)
-                                <div class="flex items-center gap-2">
-                                    <input type="radio" name="resume_option" id="{{ $resume->id }}"
-                                        value="{{ $resume->id }}"
-                                        @error('resume_option') class="border-red-500" @else class="border-gray-600" @enderror />
-                                    <x-input-label for="{{ $resume->id }}" class="text-white cursor-pointer">
-                                        {{ $resume->filename }}
-                                        <span class="text-gray-400 text-sm">(Last updated:
-                                            {{ $resume->updated_at->format('M d, Y') }})</span>
-                                    </x-input-label>
-                                </div>
-                            @empty
-                                <span class="text-gray-400 text-sm">No resumes found.</span>
-                            @endforelse
+                <fieldset x-bind:disabled="loading" class="space-y-6">
 
+
+                    @if ($errors->any())
+                        <div class="bg-red-500 text-white p-4 rounded-lg">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Upload New Resume -->
-                <div x-data="{ fileName: '', hasError: {{ $errors->has('resume_file') ? 'true' : 'false' }} }">
-                    <div class="flex items-center gap-2">
-                        <input x-ref="newResumeRadio" type="radio" name="resume_option" id="new_resume"
-                            value="new_resume"
-                            @error('resume_option') class="border-red-500" @else class="border-gray-600" @enderror />
-                        <x-input-label for="new_resume" class="text-white cursor-pointer"
-                            value="Upload a new resume:" />
-
-                    </div>
-
-
-                    <div class="flex items-center">
-                        <div class="flex-1">
-                            <label for="new_resume_file" class="block text-white cursor-pointer">
-                                <div class="border-2 border-dashed rounded-lg p-4 hover:border-blue-500 transition"
-                                    :class="{
-                                        'border-blue-500': fileName && !hasError,
-                                        'border-red-500': hasError,
-                                        'border-gray-600': !fileName && !hasError
-                                    }">
-                                    <input
-                                        @change="fileName = $event.target.files[0].name; $refs.newResumeRadio.checked = true"
-                                        type="file" name="resume_file" id="new_resume_file" class="hidden"
-                                        accept=".pdf" />
-                                    <div class="text-center">
-                                        <template x-if="!fileName">
-                                            <p class="text-gray-400">Click to upload PDF (Max 5MB)</p>
-                                        </template>
-
-                                        <template x-if="fileName">
-                                            <div>
-                                                <p x-text="fileName" class="mt-2 text-blue-400"></p>
-                                                <p class="text-gray-400 text-sm mt-1">Click to change file</p>
-                                            </div>
-                                        </template>
+                    @endif
+                    <!-- Resume Selection -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-4">Choose Your Resume</h3>
+                        <div class="mb-6">
+                            <x-input-label for="resume" value="Select from your existing resumes:" />
+                            <!-- List of Resumes -->
+                            <div class="space-y-4">
+                                @forelse ($resumes as $resume)
+                                    <div class="flex items-center gap-2">
+                                        <input type="radio" name="resume_option" id="{{ $resume->id }}"
+                                            value="{{ $resume->id }}"
+                                            @error('resume_option') class="border-red-500" @else class="border-gray-600" @enderror />
+                                        <x-input-label for="{{ $resume->id }}" class="text-white cursor-pointer">
+                                            {{ $resume->filename }}
+                                            <span class="text-gray-400 text-sm">(Last updated:
+                                                {{ $resume->updated_at->format('M d, Y') }})</span>
+                                        </x-input-label>
                                     </div>
+                                @empty
+                                    <span class="text-gray-400 text-sm">No resumes found.</span>
+                                @endforelse
 
-                                </div>
-                            </label>
+                            </div>
                         </div>
                     </div>
-                </div>
 
+                    <!-- Upload New Resume -->
+                    <div x-data="{ fileName: '', hasError: {{ $errors->has('resume_file') ? 'true' : 'false' }} }">
+                        <div class="flex items-center gap-2">
+                            <input x-ref="newResumeRadio" type="radio" name="resume_option" id="new_resume"
+                                value="new_resume"
+                                @error('resume_option') class="border-red-500" @else class="border-gray-600" @enderror />
+                            <x-input-label for="new_resume" class="text-white cursor-pointer"
+                                value="Upload a new resume:" />
+
+                        </div>
+
+
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <label for="new_resume_file" class="block text-white cursor-pointer">
+                                    <div class="border-2 border-dashed rounded-lg p-4 hover:border-blue-500 transition"
+                                        :class="{
+                                            'border-blue-500': fileName && !hasError,
+                                            'border-red-500': hasError,
+                                            'border-gray-600': !fileName && !hasError
+                                        }">
+                                        <input
+                                            @change="fileName = $event.target.files[0].name; $refs.newResumeRadio.checked = true"
+                                            type="file" name="resume_file" id="new_resume_file" class="hidden"
+                                            accept=".pdf" />
+                                        <div class="text-center">
+                                            <template x-if="!fileName">
+                                                <p class="text-gray-400">Click to upload PDF (Max 5MB)</p>
+                                            </template>
+
+                                            <template x-if="fileName">
+                                                <div>
+                                                    <p x-text="fileName" class="mt-2 text-blue-400"></p>
+                                                    <p class="text-gray-400 text-sm mt-1">Click to change file</p>
+                                                </div>
+                                            </template>
+                                        </div>
+
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
 
                 <!-- Submit Button -->
                 <div>
-                    <x-primary-button class="w-full">
+                    {{-- <x-primary-button class="w-full">
                         Apply Now
+                    </x-primary-button> --}}
+
+                    <x-primary-button class="w-full" x-bind:disabled="loading"
+                        x-bind:class="{ 'opacity-50 cursor-not-allowed': loading }">
+                        <span x-show="!loading">Apply Now</span>
+                        <span x-show="loading" class="flex items-center justify-center gap-2">
+                            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
+                                </path>
+                            </svg>
+                            <span>Submitting…</span>
+                        </span>
                     </x-primary-button>
                 </div>
 

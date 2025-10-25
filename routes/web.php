@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 
@@ -17,7 +18,7 @@ Route::get('/', function () {
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
-Route::middleware(['auth', 'role:job-seeker'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:job-seeker'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('job-applications.index');
     Route::get('/job-vacancies/{id}', [JobVacancyController::class, 'show'])->name('job-vacancies.show');

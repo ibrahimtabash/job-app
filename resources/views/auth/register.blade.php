@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" x-data="{ loading: false }" @submit="loading = true">
         @csrf
 
         <!-- Name -->
@@ -40,8 +40,18 @@
 
         <div class="flex flex-col items-center justify-end mt-4 gap-4">
 
-            <x-primary-button class="w-full">
-                {{ __('Register') }}
+            <x-primary-button class="w-full" x-bind:disabled="loading"
+                x-bind:class="{ 'opacity-50 cursor-not-allowed': loading }">
+                <span x-show="!loading">{{ __('Register') }}</span>
+                <span x-show="loading">
+                    <svg class="animate-spin h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                            stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                </span>
+                {{-- {{ __('Register') }} --}}
             </x-primary-button>
 
 
