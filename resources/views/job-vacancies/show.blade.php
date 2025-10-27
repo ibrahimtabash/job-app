@@ -12,7 +12,7 @@
             </a>
 
             <div class="border-b border-white/10 pb-6">
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between flex-wrap">
                     <div>
                         <h1 class="text-2xl font-bold">{{ $jobVacancy->title }}</h1>
                         <p class="text-md text-gray-400">{{ $jobVacancy->company->name }}</p>
@@ -29,18 +29,18 @@
 
                     <div>
                         <a href="{{ route('job-vacancies.apply', $jobVacancy->id) }}"
-                            class="justify-center bg-gradient-to-t from-indigo-500 to-rose-500 text-bg-white rounded-lg px-4 py-2 hover:from-indigo-600 hover:to-rose-600 transition">
+                            class="justify-center bg-gradient-to-t from-indigo-500 to-rose-500 text-bg-white rounded-lg px-4 py-7 md:py-2 hover:from-indigo-600 hover:to-rose-600 transition">
                             Apply Now
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-3 gap-4 mt-6">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
                 <div class="col-span-2">
                     <h2 class="text-lg font-bold text-white">Job Description</h2>
                     <p class="text-gray-400">{{ $jobVacancy->description }}</p>
                 </div>
-                <div class="col-span-1">
+                <div class="col-span-2 md:col-span-1">
                     <h2 class="text-lg font-bold text-white">Job Overview</h2>
                     <div class="bg-gray-900 rounded-lg p-6 space-y-4">
                         <div>
