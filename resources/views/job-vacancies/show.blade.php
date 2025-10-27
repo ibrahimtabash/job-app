@@ -29,7 +29,7 @@
 
                     <div>
                         <a href="{{ route('job-vacancies.apply', $jobVacancy->id) }}"
-                            class="justify-center bg-gradient-to-t from-indigo-500 to-rose-500 text-bg-white rounded-lg px-4 py-7 md:py-2 hover:from-indigo-600 hover:to-rose-600 transition">
+                            class="justify-center bg-gradient-to-t from-indigo-500 to-rose-500 text-bg-white rounded-lg px-4 py-10 md:py-2 hover:from-indigo-600 hover:to-rose-600 transition">
                             Apply Now
                         </a>
                     </div>
